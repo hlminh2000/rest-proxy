@@ -8,7 +8,10 @@ const TARGET_HOST = process.env.TARGET_HOST || "https://google.com";
 const app = express();
 
 app.use(morgan("combined"));
-app.use("*", createProxyMiddleware({ target: TARGET_HOST }));
+app.use(
+  "*",
+  createProxyMiddleware({ target: TARGET_HOST, changeOrigin: true })
+);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

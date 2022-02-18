@@ -7,9 +7,13 @@ const TARGET_HOST = process.env.TARGET_HOST || "https://google.com";
 
 const app = express();
 
-app.use(morgan("combined"));
 app.use(
   "*",
+  morgan("combined"),
+  (req, res, next) => {
+    console.log("body: ", req.body);
+    next();
+  },
   createProxyMiddleware({ target: TARGET_HOST, changeOrigin: true })
 );
 
